@@ -1,0 +1,28 @@
+name = "lead-capture"
+main = "src/worker.js"
+compatibility_date = "2026-11-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lead-capture"
+database_id = "<your-d1-database-id>"
+
+[vars]
+# Comma-separated card ids. /card/<id> and /card/<id>.vcf are logged.
+CARDS = "alex,sam,team"
+# Turnstile tokens must have been issued for this hostname.
+SITE_HOSTNAME = "example.com"
+# Cloudflare Access settings for /stats.
+ACCESS_TEAM_DOMAIN = "<your-team>.cloudflareaccess.com"
+ACCESS_AUD = "<access-application-aud-tag>"
+STATS_ALLOWLIST = "alex@example.com,sam@example.com"
+
+# Secrets, set with `npx wrangler secret put <NAME>`:
+#   TURNSTILE_SECRET   Turnstile secret key
+#   TEAMS_WEBHOOK_URL  Teams Workflows webhook URL
+#   IP_HASH_SALT       random string used to hash client IPs
