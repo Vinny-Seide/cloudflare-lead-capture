@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alex Rivera</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    body { font-family: -apple-system, "Segoe UI", Arial, sans-serif; max-width: 420px; margin: 40px auto; padding: 0 16px; color: #1f2328; }
+    input, textarea, button { display: block; width: 100%; box-sizing: border-box; margin: 8px 0; padding: 10px; font: inherit; }
+    .hp { position: absolute; left: -9999px; }
+  </style>
+</head>
+<body>
+  <h1>Alex Rivera</h1>
+  <p>Systems Administrator, Contoso IT</p>
+  <p><a href="/card/alex.vcf">Save contact</a></p>
+
+  <h2>Share your info</h2>
+  <form id="lead">
+    <input name="name" placeholder="Name" required>
+    <input name="email" type="email" placeholder="Email" required>
+    <input name="phone" placeholder="Phone (optional)">
+    <input name="company" placeholder="Company (optional)">
+    <textarea name="note" placeholder="Note (optional)"></textarea>
+    <input name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+    <button>Send</button>
+  </form>
+  <p id="status" role="status"></p>
+
+  <script>
+    document.getElementById("lead").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const f = new FormData(e.target);
+      const body = Object.fromEntries(f);
+      body.token = f.get("cf-turnstile-response");
+      body.card = "alex";
+      body.src = new URLSearchParams(location.search).get("src") || "card";
+      const r = await fetch("/lead", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+      const out = await r.json().catch(() => ({}));
+      document.getElementById("status").textContent = out.ok ? "Thanks, " + (out.first || "") + ". I'll be in touch." : "That didn't go through. Please check the form and try again.";
+    });
+  </script>
+</body>
+</html>

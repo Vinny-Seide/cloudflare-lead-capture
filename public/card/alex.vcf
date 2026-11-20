@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Alex Rivera
+N:Rivera;Alex;;;
+ORG:Contoso IT
+TITLE:Systems Administrator
+TEL;TYPE=WORK:+1-555-010-0100
+EMAIL;TYPE=WORK:alex@example.com
+URL:https://example.com/card/alex
+END:VCARD
